@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Rateb Haji Mohammed | Security & Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            dark: '#0a0a0f',
+                            card: '#12121a',
+                            cyan: '#00f0ff',
+                            purple: '#b026ff',
+                            text: '#a0a0b0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0f;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        /* Neon text effects */
+        .neon-text-cyan { text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+        .neon-text-purple { text-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
+        
+        /* Gradient borders */
+        .border-gradient {
+            border: 1px solid transparent;
+            background-image: linear-gradient(#12121a, #12121a), linear-gradient(to right, #00f0ff, #b026ff);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        /* Avatar glow */
+        .avatar-glow {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3), inset 0 0 20px rgba(176, 38, 255, 0.3);
+            border: 2px solid rgba(0, 240, 255, 0.5);
+        }
+
+        /* Background layers */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.3;
+        }
+        .bg-grid { background-size: 40px 40px; }
+
+        /* Syntax Highlighting Custom */
+        .code-key { color: #b026ff; }
+        .code-string { color: #00f0ff; }
+        .code-bracket { color: #e2e8f0; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+
+        /* Glow Borders for Cards */
+        .glow-border:hover { box-shadow: 0 0 15px rgba(0, 240, 255, 0.15); border-color: #00f0ff; }
+    </style>
+</head>
+<body class="antialiased relative">
+
+    <!-- Network Particles Canvas -->
+    <canvas id="network-canvas"></canvas>
+    
+    <!-- Grid Overlay (from previous design) -->
+    <div class="fixed inset-0 bg-grid-pattern bg-grid opacity-20 pointer-events-none -z-10"></div>
+    <div class="fixed inset-0 bg-gradient-to-b from-cyber-dark/80 via-cyber-dark/60 to-cyber-dark/90 pointer-events-none -z-10"></div>
+
+    <nav class="fixed w-full z-50 top-0 bg-cyber-dark/80 backdrop-blur-md border-b border-white/5 p-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold font-mono text-cyber-cyan neon-text-cyan hover:scale-105 transition-transform cursor-pointer">&lt;AR/&gt;</a>
+            
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="text-cyber-cyan text-2xl md:hidden hover:text-white transition">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Desktop Links -->
+            <div class="hidden md:flex gap-6 font-mono text-sm tracking-wider">
+                <a href="#about" class="hover:text-cyber-cyan transition">01. About</a>
+                <a href="#skills" class="hover:text-cyber-cyan transition">02. Skills</a>
+                <a href="#projects" class="hover:text-cyber-cyan transition">03. Projects</a>
+                <a href="#blog" class="hover:text-cyber-cyan transition">04. Blog</a>
+                <a href="#ai" class="hover:text-cyber-cyan transition">05. AI</a>
+                <a href="#contact" class="hover:text-cyber-cyan transition">06. Contact</a>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden flex-col gap-4 mt-4 font-mono text-sm border-t border-white/10 pt-4">
+            <a href="#about" class="hover:text-cyber-cyan transition block px-4 py-2 hover:bg-white/5 rounded">01. About Me</a>
+            <a href="#skills" class="hover:text-cyber-cyan transition block px-4 py-2 hover:bg-white/5 rounded">02. Skills</a>
+            <a href="#projects" class="hover:text-cyber-cyan transition block px-4 py-2 hover:bg-white/5 rounded">03. Projects</a>
+            <a href="#blog" class="hover:text-cyber-cyan transition block px-4 py-2 hover:bg-white/5 rounded">04. Blog</a>
+            <a href="#ai" class="hover:text-cyber-cyan transition block px-4 py-2 hover:bg-white/5 rounded">05. AI Assistant</a>
+            <a href="#contact" class="hover:text-cyber-cyan transition block px-4 py-2 hover:bg-white/5 rounded">06. Contact</a>
+        </div>
+    </nav>
+
+    <header class="min-h-screen flex flex-col items-center justify-center pt-20 px-6 relative">
+        <!-- Glowing Orbs -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyber-purple/10 rounded-full blur-[80px] -z-10"></div>
+
+        <!-- Avatar Ring -->
+        <div class="relative w-48 h-48 md:w-56 md:h-56 rounded-full avatar-glow p-1 mb-8 flex items-center justify-center bg-gradient-to-tr from-cyber-purple/20 to-cyber-cyan/20 z-10">
+            <img src="C:\Users\ASUS\Desktop\نظرة\photo_2026-06-26_01-54-45.jpg" alt="Ahmad Rateb" class="w-full h-full rounded-full object-cover">
+        </div>
+
+        <h2 class="text-sm md:text-base font-mono tracking-widest text-cyber-cyan mb-2 uppercase">Hello, I'm</h2>
+        <h1 class="text-5xl md:text-7xl font-bold mb-4 text-white neon-text-cyan text-center">Ahmad Rateb <span class="block text-3xl md:text-5xl mt-2 text-cyber-purple neon-text-purple">Haji Mohammed</span></h1>
+        <h3 class="text-xl md:text-2xl font-mono mb-6 text-slate-300">Security & Software Engineer</h3>
+        
+        <p class="text-cyber-text max-w-2xl text-center mb-10 text-sm md:text-base leading-relaxed">
+            Your partner in tech. Whether you are building a robust network, developing an AI system, or need your pipeline secured — I've got you covered.
+        </p>
+
+        <div class="flex flex-col sm:flex-row w-full max-w-md gap-4 z-10">
+            <a href="#projects" class="w-full text-center bg-cyber-cyan text-black py-3 rounded text-sm font-bold hover:bg-white transition duration-300 shadow-[0_0_15px_rgba(0,240,255,0.4)]">EXPLORE PORTFOLIO</a>
+            <a href="#contact" class="w-full text-center bg-transparent border border-cyber-cyan text-cyber-cyan py-3 rounded text-sm font-bold hover:bg-cyber-cyan/10 transition duration-300">GET IN TOUCH</a>
+        </div>
+        
+        <a href="#about" class="absolute bottom-10 animate-bounce text-cyber-cyan flex flex-col items-center gap-2 text-xs font-mono hover:text-white transition">
+            <div class="w-6 h-10 border-2 border-current rounded-full flex justify-center p-1">
+                <div class="w-1 h-2 bg-current rounded-full"></div>
+            </div>
+            Scroll Down
+        </a>
+    </header>
+
+    <section id="about" class="py-20 px-6 max-w-5xl mx-auto">
+        <div class="flex items-center gap-4 mb-10">
+            <h2 class="text-3xl font-bold text-white font-mono"><span class="text-cyber-cyan">01.</span> About Me</h2>
+            <div class="h-px bg-white/20 flex-grow"></div>
+        </div>
+        
+        <p class="text-cyber-text text-lg leading-relaxed mb-10">
+            I'm a <span class="text-cyber-cyan font-bold">Network & Security Engineer</span> with experience in securing infrastructures. I blend my expertise in <span class="text-cyber-purple">Cybersecurity</span> with <span class="text-cyber-cyan">Software Development (Flutter & AI)</span> to build and protect modern digital ecosystems.
+        </p>
+        
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 text-center bg-cyber-card border border-white/5 rounded-xl py-8">
+            <div>
+                <div class="text-4xl font-bold text-cyber-cyan mb-2">3+</div>
+                <div class="text-xs font-mono text-cyber-text uppercase tracking-wider">Years Experience</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-cyber-cyan mb-2">15+</div>
+                <div class="text-xs font-mono text-cyber-text uppercase tracking-wider">Projects</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-cyber-purple mb-2">SIEM</div>
+                <div class="text-xs font-mono text-cyber-text uppercase tracking-wider">SOC Operations</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-cyber-purple mb-2">DevSec</div>
+                <div class="text-xs font-mono text-cyber-text uppercase tracking-wider">Methodology</div>
+            </div>
+        </div>
+
+        <div class="bg-cyber-card border border-white/10 rounded-xl overflow-hidden shadow-2xl mx-auto w-full">
+            <!-- Mac style window header -->
+            <div class="bg-white/5 px-4 py-3 flex gap-2 border-b border-white/5">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <!-- Code content -->
+            <div class="p-6 font-mono text-sm leading-loose overflow-x-auto">
+                <span class="text-pink-500">const</span> <span class="text-yellow-200">engineer</span> <span class="code-bracket">= {</span><br>
+                &nbsp;&nbsp;<span class="code-key">name:</span> <span class="code-string">"Ahmad Rateb Haji Mohammed"</span>,<br>
+                &nbsp;&nbsp;<span class="code-key">role:</span> <span class="code-string">"Security & Software Engineer"</span>,<br>
+                &nbsp;&nbsp;<span class="code-key">expertise:</span> <span class="code-bracket">[</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Security Operations & SIEM"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Network Security & Hardening"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"AI & Machine Learning"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Flutter App Development"</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Graphic & UI/UX Design"</span><br>
+                &nbsp;&nbsp;<span class="code-bracket">]</span>,<br>
+                &nbsp;&nbsp;<span class="code-key">status:</span> <span class="code-string">"Ready for new challenges"</span><br>
+                <span class="code-bracket">};</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 px-6 max-w-5xl mx-auto">
+        <div class="flex items-center gap-4 mb-10">
+            <h2 class="text-3xl font-bold text-white font-mono"><span class="text-cyber-cyan">02.</span> Domains & Tech</h2>
+            <div class="h-px bg-white/20 flex-grow"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Skill Card 1 -->
+            <div class="border-gradient rounded-2xl p-6 group hover:-translate-y-1 transition-transform">
+                <div class="flex items-center gap-4 mb-4">
+                    <i class="fas fa-shield-virus text-3xl text-cyber-cyan"></i>
+                    <h3 class="text-xl font-bold text-white">Cybersecurity & SIEM</h3>
+                </div>
+                <p class="text-cyber-text text-sm mb-6 leading-relaxed">Detect, analyze, and respond to security incidents. Network hardening and vulnerability assessments.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-cyber-cyan">Security Onion</span>
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-cyber-cyan">Wazuh</span>
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-cyber-cyan">Splunk</span>
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-cyber-cyan">Burp Suite</span>
+                </div>
+            </div>
+
+            <!-- Skill Card 2 -->
+            <div class="border-gradient rounded-2xl p-6 group hover:-translate-y-1 transition-transform">
+                <div class="flex items-center gap-4 mb-4">
+                    <i class="fas fa-brain text-3xl text-cyber-purple"></i>
+                    <h3 class="text-xl font-bold text-white">Software Dev & AI</h3>
+                </div>
+                <p class="text-cyber-text text-sm mb-6 leading-relaxed">Building cross-platform applications, integrating artificial intelligence, and creating scalable digital solutions.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-cyber-purple">Flutter / Dart</span>
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-cyber-purple">Python</span>
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-cyber-purple">TensorFlow</span>
+                    <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono text-cyber-purple">UI/UX</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 px-6 max-w-6xl mx-auto">
+        <div class="flex items-center gap-4 mb-10">
+            <h2 class="text-3xl font-bold text-white font-mono"><span class="text-cyber-cyan">03.</span> My Projects</h2>
+            <div class="h-px bg-white/20 flex-grow"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Project 1 -->
+            <div class="bg-cyber-card rounded-xl p-6 border border-white/10 glow-border transition group">
+                <div class="flex justify-between items-start mb-4">
+                    <i class="fas fa-folder-open text-4xl text-cyber-purple group-hover:text-cyber-cyan transition"></i>
+                    <div class="flex gap-3 text-slate-400">
+                        <a href="#" class="hover:text-cyber-cyan"><i class="fab fa-github text-xl"></i></a>
+                        <a href="#" class="hover:text-cyber-cyan"><i class="fas fa-external-link-alt text-xl"></i></a>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyber-cyan transition">Secure IoT Architecture</h3>
+                <p class="text-cyber-text text-sm mb-6 leading-relaxed">Production architecture for distributed ESP32 deployments using mutual TLS and network segmentation.</p>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-cyber-cyan">
+                    <span class="bg-cyber-cyan/10 px-2 py-1 rounded">Python</span>
+                    <span class="bg-cyber-cyan/10 px-2 py-1 rounded">IoT</span>
+                    <span class="bg-cyber-cyan/10 px-2 py-1 rounded">Security</span>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="bg-cyber-card rounded-xl p-6 border border-white/10 glow-border transition group">
+                <div class="flex justify-between items-start mb-4">
+                    <i class="fas fa-folder-open text-4xl text-cyber-purple group-hover:text-cyber-cyan transition"></i>
+                    <div class="flex gap-3 text-slate-400">
+                        <a href="#" class="hover:text-cyber-cyan"><i class="fab fa-github text-xl"></i></a>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyber-cyan transition">AI Chat Assistant</h3>
+                <p class="text-cyber-text text-sm mb-6 leading-relaxed">An intelligent conversational agent built with machine learning models to help engineers debug code faster.</p>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-cyber-cyan">
+                    <span class="bg-cyber-cyan/10 px-2 py-1 rounded">AI/ML</span>
+                    <span class="bg-cyber-cyan/10 px-2 py-1 rounded">TensorFlow</span>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="bg-cyber-card rounded-xl p-6 border border-white/10 glow-border transition group">
+                <div class="flex justify-between items-start mb-4">
+                    <i class="fas fa-folder-open text-4xl text-cyber-purple group-hover:text-cyber-cyan transition"></i>
+                    <div class="flex gap-3 text-slate-400">
+                        <a href="#" class="hover:text-cyber-cyan"><i class="fas fa-external-link-alt text-xl"></i></a>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyber-cyan transition">Flutter E-Commerce App</h3>
+                <p class="text-cyber-text text-sm mb-6 leading-relaxed">A fully functional mobile application with modern UI/UX, integrated payment gateways, and backend APIs.</p>
+                <div class="flex flex-wrap gap-2 text-xs font-mono text-cyber-cyan">
+                    <span class="bg-cyber-cyan/10 px-2 py-1 rounded">Flutter</span>
+                    <span class="bg-cyber-cyan/10 px-2 py-1 rounded">Dart</span>
+                    <span class="bg-cyber-cyan/10 px-2 py-1 rounded">Firebase</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="py-20 px-6 max-w-6xl mx-auto">
+        <div class="flex items-center gap-4 mb-10">
+            <h2 class="text-3xl font-bold text-white font-mono"><span class="text-cyber-cyan">04.</span> Latest Articles</h2>
+            <div class="h-px bg-white/20 flex-grow"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Article 1 -->
+            <a href="#" class="flex flex-col md:flex-row bg-cyber-card rounded-xl border border-white/10 glow-border transition overflow-hidden group">
+                <div class="w-full md:w-1/3 bg-white/5 flex items-center justify-center p-8 group-hover:bg-cyber-cyan/10 transition">
+                    <i class="fas fa-shield-alt text-5xl text-cyber-cyan"></i>
+                </div>
+                <div class="p-6 w-full md:w-2/3">
+                    <p class="text-cyber-cyan text-xs font-bold mb-2 font-mono">June 20, 2026</p>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyber-cyan transition" dir="rtl">كيف تحمي تطبيقاتك من ثغرات الحقن (SQL Injection)</h3>
+                    <p class="text-cyber-text text-sm mb-4 line-clamp-2" dir="rtl">دليل شامل يشرح أساسيات الحماية للمبرمجين وكيفية كتابة كود آمن ومحصن ضد الهجمات الشائعة.</p>
+                    <span class="text-sm text-cyber-cyan border-b border-transparent group-hover:border-cyber-cyan pb-1">Read Article &rarr;</span>
+                </div>
+            </a>
+
+            <!-- Article 2 -->
+            <a href="#" class="flex flex-col md:flex-row bg-cyber-card rounded-xl border border-white/10 glow-border transition overflow-hidden group">
+                <div class="w-full md:w-1/3 bg-white/5 flex items-center justify-center p-8 group-hover:bg-cyber-purple/10 transition">
+                    <i class="fas fa-brain text-5xl text-cyber-purple"></i>
+                </div>
+                <div class="p-6 w-full md:w-2/3">
+                    <p class="text-cyber-purple text-xs font-bold mb-2 font-mono">May 15, 2026</p>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyber-purple transition" dir="rtl">مستقبل الذكاء الاصطناعي في هندسة البرمجيات</h3>
+                    <p class="text-cyber-text text-sm mb-4 line-clamp-2" dir="rtl">مقال يستعرض كيف ستتغير أدوار المبرمجين والمهندسين في ظل التطور السريع لنماذج الذكاء الاصطناعي التوليدي.</p>
+                    <span class="text-sm text-cyber-purple border-b border-transparent group-hover:border-cyber-purple pb-1">Read Article &rarr;</span>
+                </div>
+            </a>
+        </div>
+        <div class="text-center mt-10">
+            <a href="#" class="inline-block border border-slate-600 text-slate-300 px-6 py-3 rounded text-sm hover:border-cyber-cyan hover:text-cyber-cyan transition">View All Articles</a>
+        </div>
+    </section>
+
+    <section id="ai" class="py-20 px-6 max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-6">
+            <h2 class="text-3xl font-bold text-white font-mono"><span class="text-cyber-cyan">05.</span> AI Engineer Assistant</h2>
+            <div class="h-px bg-white/20 flex-grow"></div>
+        </div>
+        <p class="text-cyber-text text-sm mb-8">Have questions about my services, tech stack, or need a quick tech consultation? Ask my digital twin.</p>
+        
+        <div class="bg-cyber-card border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,240,255,0.05)]">
+            <div class="bg-white/5 p-4 border-b border-white/5 flex items-center gap-3">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="font-mono text-sm text-cyber-text">AI.System.Online</span>
+            </div>
+            
+            <div id="chat-box" class="h-80 overflow-y-auto p-6 space-y-4 font-sans text-sm">
+                <!-- Initial Message -->
+                <div class="flex items-start gap-3" dir="rtl">
+                    <div class="w-8 h-8 rounded bg-cyber-purple/20 flex items-center justify-center text-cyber-purple border border-cyber-purple/50 shrink-0">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 p-3 rounded-l-lg rounded-br-lg text-gray-300">
+                        مرحباً! أنا المساعد الذكي للمهندس أحمد راتب حاجي محمد. كيف يمكنني مساعدتك اليوم في مجالات الأمن السيبراني، تطوير البرمجيات، أو الذكاء الاصطناعي؟
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-black/20 border-t border-white/5 flex gap-2">
+                <input type="text" id="ai-input" placeholder="اكتب سؤالك هنا... (عربي/English)" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-cyber-cyan font-sans text-sm dir-auto" dir="auto" onkeypress="handleEnter(event)">
+                <button onclick="askAI()" class="bg-cyber-cyan text-black px-4 py-2 rounded-lg hover:bg-white transition-colors font-bold">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 px-6 max-w-4xl mx-auto mb-10">
+        <div class="flex items-center gap-4 mb-10">
+            <div class="h-px bg-white/20 flex-grow"></div>
+            <h2 class="text-3xl font-bold text-white font-mono"><span class="text-cyber-purple">06.</span> Get In Touch</h2>
+            <div class="h-px bg-white/20 flex-grow"></div>
+        </div>
+        
+        <p class="text-cyber-text text-center mb-10 max-w-2xl mx-auto leading-relaxed">
+            I'm currently looking for new opportunities. Whether you have a question, a project in mind, or just want to say hi, I'll try my best to get back to you!
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <a href="mailto:Ahmadhajimohammedjob@gmail.com" class="bg-cyber-card border border-white/10 p-6 rounded-xl flex flex-col items-center text-center hover:border-cyber-cyan transition group shadow-lg">
+                <div class="w-12 h-12 rounded-full bg-cyber-cyan/10 flex items-center justify-center text-cyber-cyan text-xl mb-4 group-hover:scale-110 transition shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="text-sm font-mono text-cyber-text">Email</div>
+                <div class="text-xs md:text-sm mt-2 break-all text-white group-hover:text-cyber-cyan">Ahmadhajimohammedjob@gmail.com</div>
+            </a>
+            
+            <a href="tel:+963934620509" class="bg-cyber-card border border-white/10 p-6 rounded-xl flex flex-col items-center text-center hover:border-cyber-purple transition group shadow-lg">
+                <div class="w-12 h-12 rounded-full bg-cyber-purple/10 flex items-center justify-center text-cyber-purple text-xl mb-4 group-hover:scale-110 transition shadow-[0_0_15px_rgba(176,38,255,0.2)]">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="text-sm font-mono text-cyber-text">Phone</div>
+                <div class="text-sm mt-2 text-white group-hover:text-cyber-purple" dir="ltr">+963 934 620 509</div>
+            </a>
+            
+            <div class="bg-cyber-card border border-white/10 p-6 rounded-xl flex flex-col items-center text-center hover:border-[#0a66c2] transition group shadow-lg">
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white text-xl mb-4 group-hover:scale-110 transition group-hover:text-[#0a66c2]">
+                    <i class="fas fa-hashtag"></i>
+                </div>
+                <div class="text-sm font-mono text-cyber-text mb-3">Socials</div>
+                <div class="flex gap-4 text-xl text-slate-400">
+                    <a href="https://github.com/AhmadRatebHajiMohammed" target="_blank" class="hover:text-white transition"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/AhmadRatebHajiMohammed" target="_blank" class="hover:text-[#0a66c2] transition"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.facebook.com/AhmadRatebHajiMohammed" target="_blank" class="hover:text-[#1877f2] transition"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/5 py-8 text-center bg-black/50 backdrop-blur-md">
+        <div class="font-mono text-sm text-cyber-text">
+            Designed & Built by <span class="text-cyber-cyan font-bold">Ahmad Rateb</span> &copy; 2026
+        </div>
+    </footer>
+
+    <script>
+        // --- Mobile Menu Toggle ---
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        });
+        
+        // Hide menu when clicking a link
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            });
+        });
+
+        // --- Network Canvas Background Animation ---
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            const particleCount = Math.floor(width * height / 12000); // Responsive amount
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    radius: Math.random() * 1.5 + 0.5
+                });
+            }
+        }
+
+        function drawNetwork() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = '#00f0ff';
+            
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Bounce off edges
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Connect nearby particles
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        // Cyan to Purple transition lines based on distance
+                        ctx.strokeStyle = `rgba(0, 240, 255, ${0.2 * (1 - dist/120)})`; 
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(drawNetwork);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        drawNetwork();
+
+        // --- AI Chat Logic ---
+        const chatBox = document.getElementById('chat-box');
+        const aiInput = document.getElementById('ai-input');
+        
+        // Note: For actual deployment, use a backend endpoint instead of exposing API_KEY
+        const API_KEY = ''; // Leave empty for mockup mode
+
+        function handleEnter(e) {
+            if (e.key === 'Enter') askAI();
+        }
+
+        function appendMessage(sender, text, isUser) {
+            const wrapper = document.createElement('div');
+            // Check if text contains Arabic to adjust direction
+            const hasArabic = /[\u0600-\u06FF]/.test(text);
+            const dirAttr = hasArabic ? 'dir="rtl"' : 'dir="ltr"';
+            
+            wrapper.className = `flex items-start gap-3 ${isUser ? (hasArabic ? 'flex-row' : 'flex-row-reverse') : (hasArabic ? 'flex-row' : '')}`;
+            
+            const icon = isUser 
+                ? `<div class="w-8 h-8 rounded bg-cyber-cyan/20 flex items-center justify-center text-cyber-cyan border border-cyber-cyan/50 shrink-0"><i class="fas fa-user"></i></div>`
+                : `<div class="w-8 h-8 rounded bg-cyber-purple/20 flex items-center justify-center text-cyber-purple border border-cyber-purple/50 shrink-0"><i class="fas fa-robot"></i></div>`;
+                
+            const msgBg = isUser 
+                ? (hasArabic ? 'bg-cyber-cyan/10 border-cyber-cyan/30 text-white rounded-l-lg rounded-br-lg' : 'bg-cyber-cyan/10 border-cyber-cyan/30 text-white rounded-r-lg rounded-bl-lg') 
+                : (hasArabic ? 'bg-white/5 border-white/10 text-gray-300 rounded-l-lg rounded-br-lg' : 'bg-white/5 border-white/10 text-gray-300 rounded-r-lg rounded-bl-lg');
+            
+            wrapper.innerHTML = `
+                ${icon}
+                <div class="border p-3 text-sm ${msgBg} max-w-[80%]" ${dirAttr}>
+                    ${text}
+                </div>
+            `;
+            // Add wrapper in a row container to handle flex directions properly with Arabic
+            const rowContainer = document.createElement('div');
+            rowContainer.className = `flex w-full ${isUser ? (hasArabic ? 'justify-start' : 'justify-end') : (hasArabic ? 'justify-start' : 'justify-start')}`;
+            // Simplify for demonstration:
+            wrapper.className = `flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`;
+            
+            chatBox.appendChild(wrapper);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function askAI() {
+            const query = aiInput.value.trim();
+            if (!query) return;
+
+            appendMessage('أنت', query, true);
+            aiInput.value = '';
+
+            // Add loading indicator
+            const loadingId = 'loading-' + Date.now();
+            const loadDiv = document.createElement('div');
+            loadDiv.id = loadingId;
+            loadDiv.className = 'flex items-start gap-3';
+            loadDiv.innerHTML = `
+                <div class="w-8 h-8 rounded bg-cyber-purple/20 flex items-center justify-center text-cyber-purple border border-cyber-purple/50 shrink-0"><i class="fas fa-robot animate-pulse"></i></div>
+                <div class="bg-white/5 border border-white/10 p-3 rounded-r-lg rounded-bl-lg text-gray-500 text-xs italic">جاري معالجة البيانات...</div>
+            `;
+            chatBox.appendChild(loadDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                if(!API_KEY) {
+                    setTimeout(() => {
+                        document.getElementById(loadingId).remove();
+                        appendMessage('AI', 'أهلاً بك! أنا أعمل حالياً في وضع "العرض التجريبي" نظراً لعدم إرفاق مفتاح الخادم (API Key). كيف يمكنني مساعدتك برمجياً اليوم؟', false);
+                    }, 1200);
+                    return;
+                }
+
+                const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=' + API_KEY, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: "أنت مساعد ذكي لمهندس معلوماتية يدعى أحمد راتب حاجي محمد (Ahmad Rateb Haji Mohammed). أجب باختصار وبأسلوب احترافي. السؤال هو: " + query }] }]
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+                
+                if(data.candidates && data.candidates[0]) {
+                    appendMessage('AI', data.candidates[0].content.parts[0].text, false);
+                } else {
+                    throw new Error('Invalid response');
+                }
+            } catch (error) {
+                document.getElementById(loadingId)?.remove();
+                appendMessage('AI', 'عذراً، النظام غير قادر على الاتصال بالخادم حالياً. يرجى التواصل عبر البريد الإلكتروني.', false);
+            }
+        }
+    </script>
+</body>
+</html>
